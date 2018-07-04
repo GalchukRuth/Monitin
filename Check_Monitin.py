@@ -12,27 +12,27 @@ def fileContent(file_path):
         content = f.read()
     return content
 
-# Calculate file hash
+# Calculate file hash MD5
 def file2Hash(content):
     h = hashlib.md5()
     h.update(content)
     return h.hexdigest()
 
-# Checking file for executable extension (exe, dll, sys) or content (MZ)
-def isExecutable(content):
+# Checking file for executable extension (exe, dll, sys, SYS) or content (MZ)
+def isExecutable(content, file_path):
     str_mz = 'MZ'
     str_exe = '.exe'
     str_sys = '.sys'
     str_SYS = '.SYS'
     str_dll = '.dll'
     if content.find(str_mz) == 0:
-        if content.find(str_exe) > -1:
+        if file_path.find(str_exe) > -1:
             status = 'mz exe'
-        elif content.find(str_dll) > -1:
+        elif file_path.find(str_dll) > -1:
             status = 'mz dll'
-        elif content.find(str_sys) > -1:
+        elif file_path.find(str_sys) > -1:
             status = 'mz sys'
-        elif content.find(str_SYS) > -1:
+        elif file_path.find(str_SYS) > -1:
             status = 'mz SYS'
         else:
             status = 'mz without exe'
@@ -63,7 +63,7 @@ def singleFile2Dic(file_path):
     f_size = float(os.path.getsize (file_path)) / 1024
     content = fileContent(file_path)
     f_hash = file2Hash(content)
-    f_exec = isExecutable(content)
+    f_exec = isExecutable(content, file_path)
     f_time = getTime(file_path)
     f_rate = getRateFromVirusTotal(f_hash)
     dic.update({'md5': f_hash, 'is_exec': f_exec, 'time': f_time, 'rate': f_rate, 'size': f_size})
@@ -75,7 +75,7 @@ def singleFile2List(file_path):
     content = fileContent(file_path)
     f_hash = file2Hash(content)
     lst.append(float(os.path.getsize (file_path)) / 1024)
-    lst.append(isExecutable(content))
+    lst.append(isExecutable(content, file_path))
     lst.append(getTime(file_path))
     lst.append(getRateFromVirusTotal(f_hash))
     return lst
