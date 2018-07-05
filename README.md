@@ -1,4 +1,4 @@
-SIEM project by Ruth Galchuk
+Monitin project by Ruth Galchuk
 ============================
 Software product that checking monitin of files.
 It can read files and folders, and give the following information on each one:

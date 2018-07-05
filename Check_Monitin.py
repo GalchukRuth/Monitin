@@ -54,6 +54,7 @@ def getRateFromVirusTotal(hash):
         total = data['total']
         rate = float(pos) / float(total)
     else:
+        #for new file not checking in VirusTotal
         rate = 0.9
     return rate
 
